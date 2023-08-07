@@ -1,7 +1,7 @@
 """
 Overview: This file establishes a connection with websocket to access all
-real-time data for a specific or list of stock symbols and reads the data into 
-the terminal.
+real-time news for a specific stock, list of stock symbols, or all stocks 
+and reads the data into the terminal.
 
 Resources: 
     - https://docs.alpaca.markets/docs/streaming-market-data (Streaming Market Data)
@@ -10,42 +10,38 @@ Resources:
     - https://www.youtube.com/watch?v=Mv6c_9FqNx4 (Streaming)
     - https://www.youtube.com/watch?v=EjQ-3iXEPEs&t=277s (Visualization)
     - https://www.qmr.ai/cryptocurrency-trading-bot-with-alpaca-in-python/
-    - https://alpaca.markets/docs/api-references/market-data-api/stock-pricing-data/realtime/#data-point-schemas
     - https://stackoverflow.com/questions/73022927/alpaca-data-not-streaming
 
-Terminal Market Stock Stream:
-    - $ wscat -c wss://stream.data.alpaca.markets/v2/iex
+Terminal Market News Stream:
+    - $ wscat -c wss://stream.data.alpaca.markets/v1beta1/news
     - Note there will only be a 10 second window to authenticate
     - $ {"action": "auth", "key": "PKA1C5GW4X4UOWGT809D", "secret": "0C0v9NZxGbHYafp4ZD0T925hk6H9bS0MTxqIsAud"}
-    - There are varying requests for streaming data:
-        - $ {"action":"subscribe","quotes":["<SYMBOL>"]}
-        - $ {"action":"subscribe","trades":["<SYMBOL>"]}
-        - $ {"action":"subscribe","trades":["<SYMBOL>"],"quotes":["<SYMBOL>"]}
+    - There are varying requests for streaming news data:
+        - $ {"action": "subscribe", "news":["*"]}
+        - $ {"action":"subscribe","news":["<SYMBOL>"]}
 """
 
 import websocket, json
 import datetime
-import config
+import real_time_data.config as config
 
 # Set SYMBOL to desired stock symbol
 # SYMBOL can be set to a list of stock symbols
 # SYMBOL can also be set to a "*" to listen to all stock symbols
-SYMBOL = "MSFT"
+SYMBOL = "*"
 
 # Define websocket on_open function to initialize connection
 def on_open(ws):
     print("Openning Connection...")
-
     auth_data = {"action": "auth", 
                  "key": config.API_KEY, 
                  "secret": config.SECRET_KEY}
     # Convert auth_data dictionary to JSON-formatted string
-    auth_data_str = json.dumps(auth_data)
+    auth_data_str = json.dumps(auth_data)  
     # Send websocket authentication
     ws.send(auth_data_str)
-
-    # Listen for symbol's trades & quotes
-    listen_message = {"action":"subscribe","trades":[SYMBOL],"quotes":[SYMBOL]}
+    # Listen for symbol's stream
+    listen_message = {"action": "subscribe","news":[SYMBOL]}
     # Convert listen_message dictionary to JSON-formatted string
     listen_message_str = json.dumps(listen_message)
     print(listen_message_str)  
@@ -83,17 +79,16 @@ def is_market_open():
 
     return market_open_time <= current_time <= market_close_time
 
-
 # If statement to ensure market is currently open to initalize websocket
 if is_market_open():
     print("Market is OPEN!")
-    
+
     # Websocket endpoint url
-    socket = "wss://stream.data.alpaca.markets/v2/iex"
-    
+    socket = "wss://stream.data.alpaca.markets/v1beta1/news"
+
     # Intializing websocket
     ws = websocket.WebSocketApp(socket, on_open=on_open, on_error=on_error, 
-                            on_message=on_message, on_close=on_close)
+                                on_message=on_message, on_close=on_close)
     ws.run_forever()
 
 else:
