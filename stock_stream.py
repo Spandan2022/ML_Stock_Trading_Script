@@ -10,6 +10,7 @@ Resources:
     - https://www.youtube.com/watch?v=Mv6c_9FqNx4 (Streaming)
     - https://www.youtube.com/watch?v=EjQ-3iXEPEs&t=277s (Visualization)
     - https://www.qmr.ai/cryptocurrency-trading-bot-with-alpaca-in-python/
+    - https://alpaca.markets/docs/api-references/market-data-api/stock-pricing-data/realtime/#data-point-schemas
     - https://stackoverflow.com/questions/73022927/alpaca-data-not-streaming
 
 Terminal Market Stock Stream:
