@@ -1,4 +1,4 @@
-"""
+'''
 Overview: This file establishes a connection with websocket to access all
 real-time news for a specific stock, list of stock symbols, or all stocks 
 and reads the data into the terminal.
@@ -19,7 +19,7 @@ Terminal Market News Stream:
     - There are varying requests for streaming news data:
         - $ {"action": "subscribe", "news":["*"]}
         - $ {"action":"subscribe","news":["<SYMBOL>"]}
-"""
+'''
 
 import websocket, json
 import datetime

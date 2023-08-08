@@ -1,4 +1,4 @@
-"""
+'''
 Overview: This file establishes a connection with websocket to access all
 real-time data for a specific or list of stock symbols and reads the data into 
 the terminal.
@@ -21,16 +21,16 @@ Terminal Market Stock Stream:
         - $ {"action":"subscribe","quotes":["<SYMBOL>"]}
         - $ {"action":"subscribe","trades":["<SYMBOL>"]}
         - $ {"action":"subscribe","trades":["<SYMBOL>"],"quotes":["<SYMBOL>"]}
-"""
+'''
 
 import websocket, json
 import datetime
-import real_time_data.config as config
+import config
 
 # Set SYMBOL to desired stock symbol
 # SYMBOL can be set to a list of stock symbols
 # SYMBOL can also be set to a "*" to listen to all stock symbols
-SYMBOL = "MSFT"
+SYMBOL = "TSLA"
 
 # Define websocket on_open function to initialize connection
 def on_open(ws):
@@ -44,8 +44,11 @@ def on_open(ws):
     # Send websocket authentication
     ws.send(auth_data_str)
 
-    # Listen for symbol's trades & quotes
-    listen_message = {"action":"subscribe","trades":[SYMBOL],"quotes":[SYMBOL]}
+    # Listen for symbol's trades, quotes, & minute bars
+    # For trades use: "trades":[SYMBOL]
+    # For quotes use: "quotes":[SYMBOL]
+    # For minute bars use: "bars":[SYMBOL]
+    listen_message = {"action":"subscribe", "bars":[SYMBOL]}
     # Convert listen_message dictionary to JSON-formatted string
     listen_message_str = json.dumps(listen_message)
     print(listen_message_str)  
@@ -55,7 +58,10 @@ def on_open(ws):
 # Define websocket on_message function to print market news recieved
 def on_message(ws, message):
     print("recieved a message:")
-    print(message)
+    # Print message in a json format so it is legible
+    parsed_message = json.loads(message)
+    formatted_message = json.dumps(parsed_message, indent=4)
+    print(formatted_message)
     
 # Define websocket on_close function to close connection
 def on_close(ws):

@@ -1,2 +1,4 @@
-websocket-client,
+alpaca-py
+websocket-client
 pytorch
+
