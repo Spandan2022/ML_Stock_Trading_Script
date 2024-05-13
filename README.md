@@ -1,10 +1,31 @@
 # ML_Stock_Trading_Script
-This project is a machine learning model that uses PyTorch to analyze and trade stocks in using real-time market data with Alpaca API. The model was trained using historical data scraped from Polygon.io.
+## Overview
+This project is a machine learning model that uses PyTorch to analyze and trade stocks using real-time market data with Alpaca API. The model was trained using 2 year minute by minute historical data scraped from Polygon.io. This model is specifically optimized for short-term trades (day-trading) on NASDAQ.
 
-The real-time data being streamed in this project are in relation to New York Stock Exchange and NASDAQ, therefore it is important to note that the program will only run while the markets are open (9:30 am to 4:00 pm EST) otherwise, the program will simply give an ERROR: Market is CLOSED!
+### Historical Training Data 
+This ML Stock Trading Script includes a `data_scrapper` directory which includes the code used to collect and organize 2 year minute by minute historical data for all stocks on NASDAQ. Each stock's historical data is stored in a csv file under it's own directory in `hostorcial_data`. 
+
+### Data Pre-Processing
+Using the historcal data we then calculate the daily ATR (Average True Range) of each stock, which allows us to determine the stocks with the highest volatility. By choosing the stock with highest volatility we ensuring the stock is suitable for short-term trading. 
+
 
 ## Getting Started
 After forking this repository, the first thing you should do is pip install all packages in requirements.txt. This can be acomplished by running the following command in the terminal.
 ```bash
 $ pip install -r requirements.txt
 ```
+
+## File Structure
+Note there are multiple directories which each having a dedicated purpose. There are a total of 2 directories within this project.
+
+### data_scraper
+The `data_scrapper` directory includes the code used to collect and organize 2 year minute by minute historical data for all stocks on NASDAQ.
+
+### real_time_data
+The `real_time_data` directory includes three files, `config.py`, `news_stream`, and `stock_stream`. 
+__config.py__
+The `config.py` file includes link to the Alapaca API's websocket URL as well as the Alpaca API keys used by news_stream`, and `stock_stream`.
+__news_stream__
+The `news_stream.py` file uses websockets to stream all market related & financial news from Benzinga.com in real-time. Benzinga is a financial news outlet that is brokers' primary source of market news. 
+__stock_stream__
+The `stock_stream.py` file uses websockets to stream all real-time data for NASDAQ. It is important to note that the program only runs when the markets are open (9:30 am to 4:00 pm EST) otherwise, the program will simply give an warning: `WARNING: NASDAQ Market is CLOSED`.

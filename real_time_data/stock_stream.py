@@ -103,4 +103,4 @@ if is_market_open():
     ws.run_forever()
 
 else:
-    print("Market is CLOSED!\nHours of Operation: 9:30am - 4:00pm EST")
+    print("WARNING: NASDAQ Market is CLOSED\nHours of Operation: 9:30am - 4:00pm EST")
