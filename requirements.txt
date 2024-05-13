@@ -1,4 +1,5 @@
 alpaca-py
 websocket-client
-pytorch
+python-dotenv
+polygon-api-client
 
