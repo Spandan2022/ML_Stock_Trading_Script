@@ -7,6 +7,7 @@ from polygon import RESTClient
 from polygon import WebSocketClient
 from polygon.websocket.models import WebSocketMessage
 from typing import List
+
 load_dotenv('secrets.env')
 API_KEY = os.environ["POLYGON_API_KEY"]
 
