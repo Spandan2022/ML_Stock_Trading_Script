@@ -3,7 +3,7 @@
 This project is a machine learning model that uses PyTorch to analyze and trade stocks using real-time market data with Alpaca API. The model was trained using 2 year minute by minute historical data scraped from Polygon.io. This model is specifically optimized for short-term trades (day-trading) on NASDAQ.
 
 ### Historical Training Data 
-This ML Stock Trading Script includes a `data_scrapper` directory which includes the code used to collect and organize 2 year minute by minute historical data for all stocks on NASDAQ. Each stock's historical data is stored in a csv file under it's own directory in `historcial_data`. 
+This ML Stock Trading Script includes a `data_scraper` directory which includes the code used to collect and organize 2 year minute by minute historical data for all stocks on NASDAQ. Each stock's historical data is stored in a csv file under it's own directory in `historcial_data`. 
 
 ### Data Pre-Processing
 Using the historcal data we then calculate the daily ATR (Average True Range) of each stock, which allows us to determine the stocks with the highest volatility. By choosing the stock with highest volatility we ensuring the stock is suitable for short-term trading. 
@@ -14,12 +14,20 @@ After forking this repository, the first thing you should do is pip install all 
 ```bash
 $ pip install -r requirements.txt
 ```
+After all the requirements have been sucessfully installed create an `secrets.env` file within the `data_scraper` directory and include the following code and replace `<API_KEY>` with your API key from Polygon.io.
+```python
+POLYGON_API_KEY = "<API_KEY>"
+```
+Now `cd` into the `data_scrapper` directory. When the program, `polygon_scraper.py`, is run it will create a csv file with following naming format: `SYMBL-startDate-endDate.csv`. To run the program run the following command in the terminal.
+```bash
+$ python3 polygon_scraper.py
+```
 
 ## File Structure
 Note there are multiple directories which each having a dedicated purpose. There are a total of 2 directories within this project.
 
 ### data_scraper
-The `data_scrapper` directory includes the code used to collect and organize 2 year minute by minute historical data for all stocks on NASDAQ.
+The `data_scraper` directory includes the code used to collect and organize 2 year minute by minute historical data for all stocks on NASDAQ.
 
 ### real_time_data
 The `real_time_data` directory includes three files, `config.py`, `news_stream`, and `stock_stream`. 
