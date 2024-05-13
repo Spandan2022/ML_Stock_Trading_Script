@@ -24,7 +24,7 @@ The `data_scrapper` directory includes the code used to collect and organize 2 y
 ### real_time_data
 The `real_time_data` directory includes three files, `config.py`, `news_stream`, and `stock_stream`. 
 
-__config.py__
+#### config.py
 The `config.py` file includes link to the Alapaca API's websocket URL as well as the Alpaca API keys used by news_stream`, and `stock_stream`.
 
 __news_stream__
