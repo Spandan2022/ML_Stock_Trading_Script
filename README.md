@@ -5,6 +5,6 @@ The real-time data being streamed in this project are in relation to New York St
 
 ## Getting Started
 After forking this repository, the first thing you should do is pip install all packages in requirements.txt. This can be acomplished by running the following command in the terminal.
-'''bash
+```bash
 $ pip install -r requirements.txt
-'''
+```
