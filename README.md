@@ -30,13 +30,4 @@ Note there are multiple directories which each having a dedicated purpose. There
 The `data_scraper` directory includes the code used to collect and organize 2 year minute by minute historical data for all stocks on NASDAQ.
 
 ### real_time_data
-The `real_time_data` directory includes three files, `config.py`, `news_stream`, and `stock_stream`. 
-
-#### config.py
-The `config.py` file includes link to the Alapaca API's websocket URL as well as the Alpaca API keys used by news_stream`, and `stock_stream`.
-
-#### news_stream
-The `news_stream.py` file uses websockets to stream all market related & financial news from Benzinga.com in real-time. Benzinga is a financial news outlet that is brokers' primary source of market news. 
-
-#### stock_stream
-The `stock_stream.py` file uses websockets to stream all real-time data for NASDAQ. It is important to note that the program only runs when the markets are open (9:30 am to 4:00 pm EST) otherwise, the program will simply give an warning: `WARNING: NASDAQ Market is CLOSED`.
+The `real_time_data` directory includes three files, `config.py`, `news_stream`, and `stock_stream`. The `config.py` file includes link to the Alapaca API's websocket URL as well as the Alpaca API keys used by `news_stream`, and `stock_stream`. The `news_stream.py` file uses websockets to stream all market related & financial news from Benzinga.com in real-time. Benzinga is a financial news outlet that is brokers' primary source of market news. The `stock_stream.py` file uses websockets to stream all real-time data for NASDAQ. It is important to note that the program only runs when the markets are open (9:30 am to 4:00 pm EST) otherwise, the program will simply give an warning: `WARNING: NASDAQ Market is CLOSED`.
