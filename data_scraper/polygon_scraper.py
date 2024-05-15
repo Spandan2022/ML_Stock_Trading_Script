@@ -78,5 +78,6 @@ if __name__ == '__main__':
         # Do over the span of two years not including the last month
         end = start - timedelta(days=700)
 
+        # Change D:/ drive and file path
         scrape_aggregate_data("D:/", "datasets/stock_data/",
                               client, ticker, start, end)
