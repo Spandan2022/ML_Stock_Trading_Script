@@ -1,4 +1,5 @@
 import os
+import shutil
 import pandas as pd
 import time
 
@@ -13,10 +14,19 @@ load_dotenv('secrets.env')
 API_KEY = os.environ["POLYGON_API_KEY"]
 
 
-def scrape_aggregate_data(client: RESTClient, ticker: str, start: datetime, end: datetime):
+def scrape_aggregate_data(drive: str, root_dir: str, client: RESTClient, ticker: str, start: datetime, end: datetime):
+    _, _, free = shutil.disk_usage("/")
+
+    # Check to see if drive has enough space
+    if free//(2**20) < 60:
+        print("Too little storage")
+        return
+
+    data_dir = os.path.join(drive, root_dir)
+
     # If there's no folder with stock data -> create new folder with the ticker name
-    if not os.path.exists(ticker):
-        os.makedirs(ticker)
+    if not os.path.exists(os.path.join(data_dir, ticker)):
+        os.makedirs(os.path.join(data_dir, ticker))
 
     # Reference date for API call range
     current_date = start
@@ -46,7 +56,8 @@ def scrape_aggregate_data(client: RESTClient, ticker: str, start: datetime, end:
             start_string = current_date.strftime("%m-%d-%Y")
             end_string = past_date.strftime("%m-%d-%Y")
 
-            df.to_csv(f"./{ticker}/{ticker}-{start_string}-{end_string}.csv")
+            df.to_csv(
+                f"{data_dir}/{ticker}/{ticker}-{start_string}-{end_string}.csv")
 
             # Set current_date to past_date minus 1 day
             current_date = past_date - timedelta(days=1)
@@ -59,10 +70,13 @@ def scrape_aggregate_data(client: RESTClient, ticker: str, start: datetime, end:
 if __name__ == '__main__':
     client = RESTClient(api_key=API_KEY)
 
-    ticker = "AAPL"
+    ticker_df = pd.read_csv("../Tickers_Dataset/Symbols_First_Half.csv")
 
-    start = datetime(2024, 5, 1)  # Start of May cuz I felt like it
-    # Do over the span of two years not including the last month
-    end = start - timedelta(days=700)
+    for ticker in ticker_df['Symbol']:
+        print(ticker)
+        start = datetime(2024, 5, 1)  # Start of May cuz I felt like it
+        # Do over the span of two years not including the last month
+        end = start - timedelta(days=700)
 
-    scrape_aggregate_data(client, ticker, start, end)
+        scrape_aggregate_data("D:/", "datasets/stock_data/",
+                              client, ticker, start, end)
