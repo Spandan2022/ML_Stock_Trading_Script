@@ -74,7 +74,7 @@ if __name__ == '__main__':
 
     for ticker in ticker_df['Symbol']:
         print(ticker)
-        start = datetime(2024, 5, 1)  # Start of May cuz I felt like it
+        start = datetime(2024, 5, 1)  # Start of May 
         # Do over the span of two years not including the last month
         end = start - timedelta(days=700)
 
