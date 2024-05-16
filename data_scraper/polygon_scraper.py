@@ -81,3 +81,4 @@ if __name__ == '__main__':
         # Change D:/ drive and file path
         scrape_aggregate_data("D:/", "datasets/stock_data/",
                               client, ticker, start, end)
+        
