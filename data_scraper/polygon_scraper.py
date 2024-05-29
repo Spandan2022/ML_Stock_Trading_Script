@@ -18,7 +18,7 @@ def scrape_aggregate_data(drive: str, root_dir: str, client: RESTClient, ticker:
     _, _, free = shutil.disk_usage("/")
 
     # Check to see if drive has enough space
-    if free//(2**20) < 60:
+    if free//(2**20) < 40:
         print("Too little storage")
         return
 
@@ -70,7 +70,7 @@ def scrape_aggregate_data(drive: str, root_dir: str, client: RESTClient, ticker:
 if __name__ == '__main__':
     client = RESTClient(api_key=API_KEY)
 
-    ticker_df = pd.read_csv("../Tickers_Dataset/Symbols_First_Half.csv")
+    ticker_df = pd.read_csv("../Tickers_Dataset/Symbols_df.csv")
 
     for ticker in ticker_df['Symbol']:
         print(ticker)
@@ -78,7 +78,8 @@ if __name__ == '__main__':
         # Do over the span of two years not including the last month
         end = start - timedelta(days=700)
 
-        # Change D:/ drive and file path
-        scrape_aggregate_data("D:/", "datasets/stock_data/",
+        # On Windows: drive (D:/) and file path (datasets/stock_data/)
+        # On Mac: drive (/Volumes/SD) and file path (datasets/stock_data/)
+        scrape_aggregate_data("/Volumes/SD", "datasets/stock_data/",
                               client, ticker, start, end)
         
