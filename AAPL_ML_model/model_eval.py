@@ -55,5 +55,5 @@ plt.title('Actual vs Predicted Close Prices')
 plt.xlabel('Time')
 plt.ylabel('Close Price')
 plt.legend()
-plt.savefig('actual_vs_predicted_close_prices.png')  # Save the plot
+plt.savefig('model_accuracy_plot.png')  # Save the plot
 plt.show()
