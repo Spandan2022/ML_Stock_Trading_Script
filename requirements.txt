@@ -1,5 +1,10 @@
 pandas
 alpaca-py
+alpaca-trade-api
 websocket-client
 python-dotenv
 polygon-api-client
+backtrader
+torch
+matplotlib
+scikit-learn
