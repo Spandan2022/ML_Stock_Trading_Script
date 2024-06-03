@@ -1,1 +1,6 @@
 *.env
+AAPL_ML_model/AAPL.csv
+AAPL_ML_model/X_test.npy
+AAPL_ML_model/y_test.npy
+AAPL_ML_model/X_train.npy
+AAPL_ML_model/y_train.npy
