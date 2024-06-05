@@ -10,7 +10,7 @@ due to less liquidity. Alpaca currently supports these extended hours:
     - Pre-market: 4:00am - 9:30am EST (Mon to Fri)
     - After-hours: 4:00pm
 '''
-import config
+import alpaca_config
 from alpaca.trading.client import TradingClient
 from alpaca.trading.requests import MarketOrderRequest
 from alpaca.trading.enums import OrderSide, TimeInForce
