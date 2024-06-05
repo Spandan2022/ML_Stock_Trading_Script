@@ -26,11 +26,17 @@ Terminal Market Stock Stream:
 import websocket, json
 import datetime
 import config
+import ssl
+import certifi
+
+ssl_context = ssl.create_default_context(cafile=certifi.where())
+ssl_context.check_hostname = False
+ssl_context.verify_mode = ssl.CERT_NONE
 
 # Set SYMBOL to desired stock symbol
 # SYMBOL can be set to a list of stock symbols
 # SYMBOL can also be set to a "*" to listen to all stock symbols
-SYMBOL = "TSLA"
+SYMBOL = "AAPL"
 
 # Define websocket on_open function to initialize connection
 def on_open(ws):
@@ -98,9 +104,16 @@ if is_market_open():
     socket = "wss://stream.data.alpaca.markets/v2/iex"
     
     # Intializing websocket
-    ws = websocket.WebSocketApp(socket, on_open=on_open, on_error=on_error, 
-                            on_message=on_message, on_close=on_close)
-    ws.run_forever()
+    ws = websocket.WebSocketApp(
+                        socket, 
+                        on_open=on_open, 
+                        on_error=on_error, 
+                        on_message=on_message, 
+                        on_close=on_close
+                    )
+    ws.run_forever(sslopt={"ca_certs": certifi.where()})
 
 else:
     print("WARNING: NASDAQ Market is CLOSED\nHours of Operation: 9:30am - 4:00pm EST")
+    
+    
